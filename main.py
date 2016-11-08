@@ -170,7 +170,7 @@ while True:
 
         # Player 1
         if field.get_actions(b_field) == 0:
-            print('\033[31mNo actions!\033[0m')
+            print('\033[31m No actions!\033[0m')
             field.print()
             break
         print("\033[1;33m player:{0} char:{1}\033[0m".format(player1.get_name(), player1.get_char(),))
@@ -187,9 +187,9 @@ while True:
         system('clear')
         # Player 2
         if field.get_actions(b_field) == 0:
-            print(' No actions!')
+            print('\033[31m No actions!\033[0m')
             break
-        print("player:{0} char:{1}".format(player2.get_name(),player2.get_char()))
+        print("\033[1;33m player:{0} char:{1}\033[0m".format(player2.get_name(),player2.get_char()))
         field.print()
         field.change(get_int('x') - 1, get_int('y') - 1, player2.get_char())
         system('clear')
@@ -201,5 +201,5 @@ while True:
         elif who_winner(player2.get_char(), b_field, player2.get_name()) == 0:
             break
 
-    if input("\033[33m Start new game? Yes/No: \033[0m") == 'No':
+    if input("\033[33m Start new game? Yes/No: \033[0m") != 'Yes':
         break
