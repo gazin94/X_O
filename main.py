@@ -69,20 +69,13 @@ class Player:
     def __init__(self, name, char):
         self.name = name
         self.char = char
-        self.actions = 0
+
 
     def get_name(self):
         return self.name
 
     def get_char(self):
         return self.char
-
-    def set_action(self):
-        self.actions += 1
-
-    def get_quantity_actions(self):
-        return self.actions
-
 
 def winner(name):
     print("Winner {0}".format(name))
@@ -143,74 +136,70 @@ def get_int(get):
             print("Enter value")
     return number
 
-
-def end_game():
-
-    pass
-
-# Input data
-system('clear')
-print('Player 1')
-player1 = Player(input('Enter name: '), input('Enter your char: '))
-print('Player 2')
-player2 = Player(input('Enter name: '), input('Enter your char: '))
-# Перевірка на однакві імена
-while player1.get_name() == player2.get_name():
-    print("Related input information")
-
+while True:
+    # Input data
+    system('clear')
     print('Player 1')
     player1 = Player(input('Enter name: '), input('Enter your char: '))
     print('Player 2')
     player2 = Player(input('Enter name: '), input('Enter your char: '))
+    # Перевірка на однакві імена
+    while player1.get_name() == player2.get_name():
+        print("Related input information")
 
-# size = 0
-# while True:
-#     try:
-#         size = int(input('Enter field size: '))
-#         break
-#     except ValueError:
-#         print("Enter value")
+        print('Player 1')
+        player1 = Player(input('Enter name: '), input('Enter your char: '))
+        print('Player 2')
+        player2 = Player(input('Enter name: '), input('Enter your char: '))
 
-field = Field()
-# Generating
-field.set()
-while True:
-    system('clear')
-    b_field = field.get()
+    # size = 0
+    # while True:
+    #     try:
+    #         size = int(input('Enter field size: '))
+    #         break
+    #     except ValueError:
+    #         print("Enter value")
 
-    # Player 1
-    if field.get_actions(b_field) == 0:
-        print(' No actions!')
-        field.print()
-        break
-    print("player:{0} chars:{1} actions:{2}".format(player1.get_name(),
-                                                    player1.get_char(),
-                                                    player1.get_quantity_actions()))
-    field.print()
-    field.change(get_int('x') - 1, get_int('y') - 1, player1.get_char())
-    system('clear')
-    field.print()
+    field = Field()
+    # Generating
+    field.set()
+    while True:
+        system('clear')
+        b_field = field.get()
 
-    if who_winner(player1.get_char(), b_field, player1.get_name()) == 0:
-        break
-    elif who_winner(player2.get_char(), b_field, player2.get_name()) == 0:
-        break
-
-    system('clear')
-    # Player 2
-    if field.get_actions(b_field) == 0:
-        print(' No actions!')
-        break
-    print("player:{0} chars:{1} actions:{2}".format(player2.get_name(),
-                                                    player2.get_char(),
-                                                    player2.get_quantity_actions()))
-    field.print()
-    field.change(get_int('x') - 1, get_int('y') - 1, player2.get_char())
-    system('clear')
-
-    field.print()
-
-    if who_winner(player1.get_char(), b_field, player1.get_name()) == 0:
+        # Player 1
+        if field.get_actions(b_field) == 0:
+            print(' No actions!')
+            field.print()
             break
-    elif who_winner(player2.get_char(), b_field, player2.get_name()) == 0:
+        print("player:{0} chars:{1}".format(player1.get_name(), player1.get_char(),
+                                            ))
+        field.print()
+        field.change(get_int('x') - 1, get_int('y') - 1, player1.get_char())
+        system('clear')
+        field.print()
+
+        if who_winner(player1.get_char(), b_field, player1.get_name()) == 0:
+            break
+        elif who_winner(player2.get_char(), b_field, player2.get_name()) == 0:
+            break
+
+        system('clear')
+        # Player 2
+        if field.get_actions(b_field) == 0:
+            print(' No actions!')
+            break
+        print("player:{0} chars:{1}".format(player2.get_name(),player2.get_char()))
+        field.print()
+        field.change(get_int('x') - 1, get_int('y') - 1, player2.get_char())
+        system('clear')
+
+        field.print()
+
+        if who_winner(player1.get_char(), b_field, player1.get_name()) == 0:
+                break
+        elif who_winner(player2.get_char(), b_field, player2.get_name()) == 0:
+            break
+
+    if input("Start new game? Yes/No: ") == 'No':
         break
