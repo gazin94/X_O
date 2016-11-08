@@ -1,4 +1,5 @@
 from os import system
+char = '*'
 
 
 class Field:
@@ -17,19 +18,19 @@ class Field:
         :return:
         """
         for dummy_i in range(self.size):
-            self.field.append(list('-'*3))
+            self.field.append(list(char*3))
 
     def get(self):
         return self.field
 
     def print(self):
         """
-        Відображає поле як 3 ряди з елементів "_"
+        Відображає поле як 3 ряди з елементів "-"
         :return:
         """
         for string in range(len(self.field)):
             print(self.field[string])
-        print("Actions: {0}".format(self.actions))
+        print("\033[1;33m Actions: {0}\033[0m".format(self.actions))
 
     def change(self, x, y, value):
         while x > 2:
@@ -40,8 +41,8 @@ class Field:
             print(">3")
             y = get_int('y') - 1
 
-        while self.field[y][x] != '-':
-            print("Non free item")
+        while self.field[y][x] != char:
+            print("\033[31m Non free item\033[0m")
 
             x = get_int('x') - 1
             while x > 2:
@@ -60,7 +61,7 @@ class Field:
         for dummy_i in range(len(field)):
             for dummy_j in range(len(field[dummy_i])):
                 sub_lst = field[dummy_i]
-                if '-' == sub_lst[dummy_j]:
+                if char == sub_lst[dummy_j]:
                     self.actions += 1
         return self.actions
 
@@ -70,15 +71,15 @@ class Player:
         self.name = name
         self.char = char
 
-
     def get_name(self):
         return self.name
 
     def get_char(self):
         return self.char
 
+
 def winner(name):
-    print("Winner {0}".format(name))
+    print("\033[1;32m Winner {0}\033[0m".format(name))
 
 
 def who_winner(char, list, name):
@@ -130,27 +131,27 @@ def get_int(get):
     """
     while True:
         try:
-            number = int(input("get {0}: ".format(get)))
+            number = int(input("\033[36m get {0}: \033[0m".format(get)))
             break
         except ValueError:
-            print("Enter value")
+            print("\033[36m Enter value\033[0m")
     return number
 
 while True:
     # Input data
     system('clear')
-    print('Player 1')
-    player1 = Player(input('Enter name: '), input('Enter your char: '))
-    print('Player 2')
-    player2 = Player(input('Enter name: '), input('Enter your char: '))
+    print('\033[1;32mPlayer 1\033[0m')
+    player1 = Player(input('\033[36m  Enter name: \033[0m'), input('\033[32m Enter your char: \033[0m'))
+    print('\033[1;32mPlayer 2\033[0m')
+    player2 = Player(input('\033[36m  Enter name: \033[0m'), input('\033[32m Enter your char: \033[0m'))
     # Перевірка на однакві імена
     while player1.get_name() == player2.get_name():
-        print("Related input information")
+        print("\033[31m Related input information \033[0m")
 
-        print('Player 1')
-        player1 = Player(input('Enter name: '), input('Enter your char: '))
-        print('Player 2')
-        player2 = Player(input('Enter name: '), input('Enter your char: '))
+        print('\033[1;32mPlayer 1\033[0m')
+        player1 = Player(input('\033[36m  Enter name: \033[0m'), input('\033[32m Enter your char: \033[0m'))
+        print('\033[1;32mPlayer 2\033[0m')
+        player2 = Player(input('\033[36m  Enter name: \033[0m'), input('\033[32m Enter your char: \033[0m'))
 
     # size = 0
     # while True:
@@ -169,11 +170,10 @@ while True:
 
         # Player 1
         if field.get_actions(b_field) == 0:
-            print(' No actions!')
+            print('\033[31mNo actions!\033[0m')
             field.print()
             break
-        print("player:{0} chars:{1}".format(player1.get_name(), player1.get_char(),
-                                            ))
+        print("\033[1;33m player:{0} char:{1}\033[0m".format(player1.get_name(), player1.get_char(),))
         field.print()
         field.change(get_int('x') - 1, get_int('y') - 1, player1.get_char())
         system('clear')
@@ -189,7 +189,7 @@ while True:
         if field.get_actions(b_field) == 0:
             print(' No actions!')
             break
-        print("player:{0} chars:{1}".format(player2.get_name(),player2.get_char()))
+        print("player:{0} char:{1}".format(player2.get_name(),player2.get_char()))
         field.print()
         field.change(get_int('x') - 1, get_int('y') - 1, player2.get_char())
         system('clear')
@@ -201,5 +201,5 @@ while True:
         elif who_winner(player2.get_char(), b_field, player2.get_name()) == 0:
             break
 
-    if input("Start new game? Yes/No: ") == 'No':
+    if input("\033[33m Start new game? Yes/No: \033[0m") == 'No':
         break
